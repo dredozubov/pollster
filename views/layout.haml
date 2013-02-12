@@ -1,0 +1,18 @@
+-# coding: utf-8
+!!!
+%html
+  %head
+    %title Pollster
+    %link(rel="stylesheet" href="/js/jquery-1.9.1.min.js")
+    %link(rel="stylesheet" href="/css/kube.css")
+  %body
+    #wrapper
+      #container.container.row
+        #header
+          %h1.half.centered(align="center") Pollster
+        #content
+          =yield
+        #side_bar.sixth.push-fivesixth
+        #footer
+          %p.half.centered(align="center")
+            2013

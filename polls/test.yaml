@@ -1,0 +1,51 @@
+title:
+  test
+questions:
+  - 
+    type: radio
+    required: true
+    text: Укажите ваш пол
+    answers:
+      - Мужской
+      - Женский
+  -
+    type: radio
+    required: false
+    text: Укажите ваш возраст
+    answers:
+      - 18-25
+      - 26-35
+      - 35-50
+      - 50+
+  -
+    type: multiple
+    required: false
+    text: Your favorite colors
+    answers:
+      - Green
+      - Yellow
+      - Black
+      - White
+      - Blue
+      - Red
+  -
+    type: multiple
+    text: Укажите ваши любимые блюда
+    answers:
+      - Лазанья
+      - Печенье
+      - Зефир
+      - Беляш
+      - Чизбургер
+      - Икра баклажанная заморская
+  -
+    type: q_method
+    statements:
+      - Я люблю печеньки
+      - Я не люблю кабачки
+    range_statements:
+      - Абсолютная ложь
+      - Ложь
+      - Не знаю
+      - Правда
+      - Абсолютная правда

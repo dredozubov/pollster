@@ -1,1 +1,1 @@
-web: bundle exec ruby run.rb -p $PORT
+web: bundle exec ruby pollster.rb -p $PORT

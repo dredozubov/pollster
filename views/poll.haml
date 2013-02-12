@@ -1,0 +1,9 @@
+%form{:action => "/validate_poll", :method => "post"}
+  %fieldset
+    %ol
+      %label{:for => "name"} Name:
+      %input{:type => "text", :name => "name", :class => "text"}
+      %label{:for => "mail"} email:
+      %input{:type => "text", :name => "mail", :class => "text"}
+      %label{:for => "body"} Message:
+      %textarea{:name => "body"}
