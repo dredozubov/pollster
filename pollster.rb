@@ -6,7 +6,8 @@ require 'logger'
 require 'sinatra/partial'
 require 'ostruct'
 
-require_relative 'poll'
+require './poll'
+require './db'
 
 # enabling Sinatra partial-support
 class Blah < Sinatra::Base
@@ -15,7 +16,8 @@ class Blah < Sinatra::Base
   enable :partial_underscores
 end
 
-require_relative 'helpers'
+require './helpers'
+
 
 
 # App
