@@ -1,24 +1,29 @@
 require 'sinatra'
+require 'barista'
 require 'yaml'
 require 'haml'
 require 'pathname'
 require 'logger'
 require 'sinatra/partial'
 require 'ostruct'
-
+require './helpers'
 require './poll'
 # require './db'
 
 # enabling Sinatra partial-support
-class Blah < Sinatra::Base
+class PollsterApp < Sinatra::Application
   register Sinatra::Partial
-  # partial-name underscores(RoR-style)
-  enable :partial_underscores
+  register Barista::Integration::Sinatra
 end
 
-require './helpers'
 
-# App
+not_found do
+  haml :'404'
+end
+
+error do
+  haml :'500'
+end
 
 # input polls processing
 Dir.glob('polls/*.yaml').each do |file|
@@ -28,12 +33,4 @@ Dir.glob('polls/*.yaml').each do |file|
   get "/#{ filename }" do
     haml :poll, :locals => {:poll => poll}
   end
-end
-
-not_found do
-  haml :'404'
-end
-
-error do
-  haml :'500'
 end

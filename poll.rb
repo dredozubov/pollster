@@ -7,7 +7,6 @@ class Poll
   def initialize(poll_hash)
     @question_counter = 0
     @title = poll_hash['title']
-    puts poll_hash['title']
     @questions = process_questions poll_hash['questions']
   end
 
