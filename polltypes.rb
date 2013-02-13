@@ -1,6 +1,3 @@
-require 'ostruct'
-
-
 # helpers
 def get_enumerated_ostruct_from(iterable, property)
   results = Array.new
@@ -35,7 +32,7 @@ module PollTypes
     process_radio question
   end
 
-  def process_input(question)
+  def process_text_input(question)
     process_generic question
   end
 

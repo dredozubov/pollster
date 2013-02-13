@@ -1,0 +1,40 @@
+title:
+  test
+questions:
+  - 
+    type: radio
+    required: true
+    text: Укажите ваш пол
+    answers:
+      - Мужской
+      - Женский
+  -
+    type: radio
+    required: false
+    text: Укажите ваш возраст
+    answers:
+      - 18-25
+      - 26-35
+      - 35-50
+      - 50+
+  -
+    type: multiple
+    required: false
+    text: Укажите ваши любимые цвета
+    answers:
+      - Зеленый
+      - Желтый
+      - Черный
+      - Белый
+      - Синий
+      - Красный
+  -
+    type: multiple
+    text: Укажите ваши любимые блюда
+    answers:
+      - Лазанья
+      - Печенье
+      - Зефир
+      - Беляш
+      - Чизбургер
+      - Икра баклажанная заморская

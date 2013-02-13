@@ -1,9 +1,13 @@
-%form{:action => "/validate_poll", :method => "post"}
-  %fieldset
-    %ol
-      %label{:for => "name"} Name:
-      %input{:type => "text", :name => "name", :class => "text"}
-      %label{:for => "mail"} email:
-      %input{:type => "text", :name => "mail", :class => "text"}
-      %label{:for => "body"} Message:
-      %textarea{:name => "body"}
+%h2.half.centered(align="center")= poll.title
+%form{ :id => "poll-form", :method => "post", :class => "forms" }
+  %fieldset{:class => "liner"}
+    - poll.questions.each do |q|
+      .row
+        .fifth
+        .threefifth
+          = render_question q.question, q.index
+        .fifth
+    .row
+      .half.centered
+        %a{ :href => "/validate_poll", :class => "btn" }
+          Сохранить

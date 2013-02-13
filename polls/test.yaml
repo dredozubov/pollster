@@ -1,5 +1,5 @@
 title:
-  test
+  Тестовый опрос
 questions:
   - 
     type: radio
@@ -17,6 +17,10 @@ questions:
       - 26-35
       - 35-50
       - 50+
+  -
+    type: text_input
+    required: true
+    text: Любимое слово
   -
     type: multiple
     required: false
@@ -38,6 +42,15 @@ questions:
       - Беляш
       - Чизбургер
       - Икра баклажанная заморская
+  -
+    type: multiple_with_input
+    required: true
+    text: Pollster is
+    answers:
+      - Уродливый
+      - Красивый
+      - Сырой
+      - Крутой
   -
     type: q_method
     statements:

@@ -1,5 +1,6 @@
 source :rubygems
 gem 'sinatra'
+gem 'sinatra-partial'
 gem 'haml'
 gem 'thin'
 gem 'barista'
