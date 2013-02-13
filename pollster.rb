@@ -7,7 +7,7 @@ require 'sinatra/partial'
 require 'ostruct'
 
 require './poll'
-require './db'
+# require './db'
 
 # enabling Sinatra partial-support
 class Blah < Sinatra::Base
@@ -17,8 +17,6 @@ class Blah < Sinatra::Base
 end
 
 require './helpers'
-
-
 
 # App
 
@@ -32,10 +30,10 @@ Dir.glob('polls/*.yaml').each do |file|
   end
 end
 
-get '/' do
-  haml :index
+not_found do
+  haml :'404'
 end
 
-get '/about' do 
-  haml :about
+error do
+  haml :'500'
 end

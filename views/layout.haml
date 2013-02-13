@@ -2,7 +2,7 @@
 !!!
 %html
   %head
-    %title= "Pollster - #{ poll.title }"
+    %title= "Pollster #{ defined? poll ? poll.title : 'error!'}"
     %link(rel="stylesheet" href="/js/jquery-1.9.1.min.js")
     %link(rel="stylesheet" href="/css/kube.css")
   %body
