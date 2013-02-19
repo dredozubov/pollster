@@ -1,5 +1,9 @@
 title:
   Тестовый опрос
+description:
+   Это описание, сюда можно писать о том зачем этот опрос нужен и о том как его проходить.
+thanks_message: 
+  Спасибо за прохождение опроса, вы очень помогли
 questions:
   - 
     type: radio
@@ -23,7 +27,7 @@ questions:
     text: Любимое слово
   -
     type: multiple
-    required: false
+    required: true
     text: Your favorite colors
     answers:
       - Green

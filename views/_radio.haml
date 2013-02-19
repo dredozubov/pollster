@@ -1,6 +1,5 @@
-%div{ :class => 'question' }
-  %strong= text
-  - answers.each do |answer|
-    %label
-      %input{ :type => "radio", :name => "question_#{ index }", :id => answer.index }
-      = answer.answer
+.answers
+- answers.each do |answer|
+  %label
+    %input{ :type => "radio", :name => "question_#{ index }", :id => answer.index }
+    = answer.answer

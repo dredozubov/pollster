@@ -3,17 +3,19 @@
 %html
   %head
     %title= "Pollster #{ defined? poll ? poll.title : 'error!'}"
-    %link(rel="stylesheet" href="/js/jquery-1.9.1.min.js")
+    %script(src="/js/jquery-1.9.1.min.js")
+    %script(src="/application.js")
     %link(rel="stylesheet" href="/css/kube.css")
-  %body
+  %body.kubepage
     #wrapper
       #container.container.row
-        #header
+        #header.row
           %h1.half.centered(align="center")
             Pollster
         #content
           =yield
-        #side_bar.sixth.push-fivesixth
         #footer
-          %p.half.centered(align="center")
-            2013, Powered by Pollster
+          .row
+            .half.centered
+              %p(align="center")
+                2013, Powered by Pollster

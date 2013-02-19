@@ -1,13 +1,20 @@
-%h2.half.centered(align="center")= poll.title
-%form{ :id => "poll-form", :method => "post", :class => "forms" }
+.row
+  %h2.half.centered(align="center")= poll.title
+.row
+  .half.centered
+    %span= poll.description ? poll.description : ""
+%form.container{ :id => "poll-form", :method => "post", :class => "forms" }
   %fieldset{:class => "liner"}
     - poll.questions.each do |q|
       .row
-        .fifth
-        .threefifth
-          = render_question q.question, q.index
-        .fifth
+        .quarter
+        .half
+          %div{ :class => "question", :type => q.question['type'], :required => q.question['required'].to_s, :id => "question_#{q.index}"}
+            %label{ :class => "bold" }
+              = q.question['text']
+              %span
+            = render_question q.question, q.index
     .row
-      .half.centered
-        %a{ :href => "/validate_poll", :class => "btn" }
+      .sixth.centered
+        %a{ :align => "center", :id => "save_poll_btn", :class => "btn btn-full" }
           Сохранить

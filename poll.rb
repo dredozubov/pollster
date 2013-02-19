@@ -2,11 +2,13 @@ require_relative 'polltypes'
 
 class Poll
   include PollTypes
-  attr_reader :title, :questions, :type
+  attr_reader :title, :questions, :type, :description, :thanks_message
   
   def initialize(poll_hash)
     @question_counter = 0
     @title = poll_hash['title']
+    @description = poll_hash['description']
+    @thanks_message = poll_hash['thanks_message']
     @questions = process_questions poll_hash['questions']
   end
 
