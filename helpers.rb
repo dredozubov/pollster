@@ -23,6 +23,14 @@ module Haml
           })
       when 'multiple_with_input'
         generic_partial question, index
+      when 'q_method'
+        partial(:_q_method, :locals => {
+          :type => question['type'],
+          :required => question['required'],
+          :statements => question['statements'],
+          :range_statements => question['range_statements'],
+          :index => index
+          })
       end
     end
   end

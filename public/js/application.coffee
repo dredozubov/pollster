@@ -23,10 +23,10 @@ savePollAjax = (validatedData) ->
   request.error (jqXHR, textStatus, errorThrown) -> alert("AJAX Error: #{[textStatus, errorThrown]}")
 
 setQuestionError = (question_id, errorText) ->
-  $("##{question_id} span").addClass("error").text(errorText)
+  $("##{question_id} span.validation").addClass("error").text(errorText)
 
 removeQuestionError = (question_id) ->
-  $("##{question_id} span").empty()
+  $("##{question_id} span.validation").empty()
 
 class Validator
   @validate: (questionId) ->
@@ -68,6 +68,16 @@ class Validator
       setQuestionError questionId, 'required'
       false
 
+  @validateQMethod: (questionId) ->
+    numberSet = $("##{ questionId } .statements .statement[set='true']").length
+    numberTotal = $("##{ questionId } .statements .statement").length
+    if numberTotal == numberSet
+      removeQuestionError questionId
+      true
+    else
+      setQuestionError questionId, 'not complete'
+      false
+
 class Collector
   @collectRadio: (questionId) ->
     $("input[name='#{questionId}'][type='radio']:checked").attr('id')
@@ -80,6 +90,12 @@ class Collector
 
   @collectTextInput: (questionId) ->
     do $("input[name='#{questionId}'][type='text']").val
+
+  @collectQMethod: (questionId) ->
+    result = {}
+    $("##{ questionId } .statements .statement").each (index, statement) =>
+      result[statement.getAttribute('id')] = statement.getAttribute('range_statement')
+    result
 
   @collect: (questions) -> 
     result = []
@@ -101,13 +117,50 @@ save = ->
   isOk = true
   for question, i in $(".question[required='true']")
     unless Validator.validate(question.getAttribute("id"))
-      console.log 'validation failed'
       isOk = false
   if isOk
-    console.log 'ok'
     savePollAjax(Collector.collect($(".question")))
 
+setStatement = (questionId) ->
+  visible = $("##{ questionId } .statements .statement:visible:first")
+  if visible.length
+    rangeStatementId = $("input[name='#{questionId}'][type='radio']:checked").attr('id')
+    visible.attr('range_statement', rangeStatementId)
+    visible.attr('set', 'true')
+    do visible.hide
+
+unsetStatement = (questionId, statementId) ->
+  statement = $("##{ questionId } .statements .statement[id='#{ statementId }']")
+  statement.removeAttr('set')
+  statement.removeAttr('range_statement')
+  $("##{ questionId } .progress span.current").text $("##{ questionId } .statements .statement[set='true']").length
+  $("##{ questionId } #select_statement").show()
+
+init_q_method_questions = ->
+  $(".question[type='q_method']").each (index, question) =>
+    questionId = question.getAttribute('id')
+    # show initial state
+    $("##{ questionId } .statements .statement:first").show()
+    $("##{ questionId } .progress").show()
+    $("##{ questionId } .range_statements").show()
+  $(".question[type='q_method'] #select_statement").each (index, question) => 
+    questionId = question.parentNode.getAttribute('id')
+    $("##{ questionId } #select_statement").click (btn) =>
+      # make sure at least one range statement is checked
+      if $("input[name='#{ questionId }'][type='radio']:checked").length
+        total = $("##{ questionId } .progress span.length")
+        current = $("##{ questionId } .progress span.current")
+        setStatement questionId
+        # show next statement
+        do $("##{ questionId } .statements .statement:not([set]):first").show
+        # update progress counter
+        current.text $("##{ questionId } .statements .statement[set='true']").length
+        # if all statements are checked, then hide "next" button
+        if $.trim(total.text()) == $.trim(current.text())
+          $("##{ questionId } #select_statement").hide()
+
 init = ->
+  do init_q_method_questions
   $("#save_poll_btn").bind "click", save
 
 $ ->

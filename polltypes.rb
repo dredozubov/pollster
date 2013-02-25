@@ -43,6 +43,7 @@ module PollTypes
 
   def process_q_method(question)
     processed = Hash.new
+    processed['text'] = question['text']
     processed['type'] = question['type']
     processed['required'] = question['required'] || false
     processed['statements'] = get_enumerated_ostruct_from question['statements'], :statement

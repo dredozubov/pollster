@@ -12,7 +12,7 @@
           %div{ :class => "question", :type => q.question['type'], :required => q.question['required'].to_s, :id => "question_#{q.index}"}
             %label{ :class => "bold" }
               = q.question['text']
-              %span
+              %span.validation
             = render_question q.question, q.index
     .row
       .sixth.centered

@@ -1,0 +1,19 @@
+
+.statements
+  - statements.each do |s|
+    %span.bold.statement{ :style => "display: none;", :id => s.index }= s.statement
+.range_statements(style="display: none;")
+  - range_statements.each do |r|
+    %label
+      %input{ :type => "radio", :name => "question_#{ index }", :id => r.index }
+        = r.range_statement
+%a{ :align => "right", :id => "select_statement", :class => "btn" }next
+.progress(style="display: none;")
+  %span
+    progress: 
+  %span.current
+    0
+  %span
+    of
+  %span.length
+    = statements.length

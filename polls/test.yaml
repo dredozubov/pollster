@@ -56,10 +56,13 @@ questions:
       - Сырой
       - Крутой
   -
+    text: клёвое описание вопроса
     type: q_method
+    required: true
     statements:
       - Я люблю печеньки
       - Я не люблю кабачки
+      - Я люблю профитроли
     range_statements:
       - Абсолютная ложь
       - Ложь
