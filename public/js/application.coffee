@@ -15,6 +15,7 @@ toCamelCase = (string) ->
 savePollAjax = (validatedData) ->
   for d in validatedData
     console.log d
+  console.log "savePollURL: #{savePollURL}"
   request = $.post savePollURL, 
     data: validatedData
     datatype: 'json'

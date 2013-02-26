@@ -1,4 +1,4 @@
-require_relative 'polltypes'
+require './polltypes'
 
 class Poll
   include PollTypes
