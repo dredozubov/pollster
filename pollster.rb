@@ -1,3 +1,5 @@
+polls = {}
+
 not_found do
   haml :'404'
 end
@@ -21,6 +23,7 @@ Dir.glob('polls/*.yaml').each do |file|
   else
     # poll file is ok
     filename = Pathname.new(file).basename.to_s.split('.')[0...-1].join('.')
+    polls[filename] = poll
     
     # poll
     get "/#{ filename }" do
@@ -28,12 +31,25 @@ Dir.glob('polls/*.yaml').each do |file|
     end
 
     post "/#{ filename }/validate_poll" do
-      logger.info params[:data]
+      # validation
       begin
-        settings.db.save filename, params[:data]
-      rescue Mongo::MongoRubyError => exc
+        polls[filename].validate params[:data]
+      rescue ValidationError => exc
+        logger.warn "Cannot validate answers(#{ exc }): #{ params[:data] }"
+        halt 400
       end
-      'success!'
+
+      # writing to db
+      begin
+        logger.info params[:data]
+        data = params[:data].values.map{ |x| x['data'] }.flatten.map{ |x| x != 'NaN' ? x : nil }
+        settings.db.save filename, { "data" => data, "ip" => request.ip, "timestamp" => Time.new.inspect }
+      rescue DatabaseWriteError => exc
+        logger.error "Cannot write to database: #{ exc }"
+        halt 400
+      end
+      # smooth execution
+      status 200
     end
 
     get "/#{ filename }/thank_you" do

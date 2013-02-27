@@ -13,9 +13,28 @@ require './db'
 
 
 class PollsterAppRack < Sinatra::Application
-  configure :production, :development do
+  configure :development do
     set :db_backend, DBMongo
-    set :db_settings, { :host => 'localhost', :port => 27017, :dbname => 'pollster' }
+    set :db_settings, { 
+      :host => 'localhost',
+      :port => 27017,
+      :dbname => 'pollster',
+    }
+  end
+
+  configure :production do
+    set :db_backend, DBMongo
+    set :db_settings, {
+      :host => 'localhost',
+      :port => 27017,
+      :dbname => 'pollster',
+      :user => 'myproductionuser',
+      :password => 'mysupercoolproductionpassword'
+    }
+
+  end
+
+  configure :production, :development do
     set :db, DatabaseBackend.new(settings.db_settings, settings.db_backend)
     enable :logging
   end

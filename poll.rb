@@ -1,7 +1,9 @@
 require './polltypes'
 
+
 class Poll
-  include PollTypes
+  include PollTypes::Processing
+  include PollTypes::Validation
   attr_reader :title, :questions, :type, :description, :thanks_message
   
   def initialize(poll_hash)
@@ -23,6 +25,7 @@ class Poll
         @question_counter += 1
         result << ostruct
       else
+        puts "missing processing method: #{ method }"
         next
       end
     end
@@ -31,5 +34,20 @@ class Poll
 
   def length
     @question_counter
+  end
+
+  def validate(data)
+    if @question_counter != data.length
+      raise ValidationError, "question number is not valid: #{ data.length } out of #{ @question_counter }"
+    end
+    answer_data_array = data.map{ |x| x[1]['data'] }
+    @questions.map(&:question).zip(answer_data_array).select{ |x| x[0]['required'] }.each do |question, answers|
+      method = "validate_#{ question['type'] }"
+      if respond_to? method
+        send(method, question, answers)
+      else
+        puts "missing validation method: #{ method }"        
+      end
+    end
   end
 end

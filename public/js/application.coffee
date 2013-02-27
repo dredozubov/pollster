@@ -13,9 +13,6 @@ toCamelCase = (string) ->
   uncapitalize joined
 
 savePollAjax = (validatedData) ->
-  for d in validatedData
-    console.log d
-  console.log "savePollURL: #{savePollURL}"
   request = $.post savePollURL, 
     data: validatedData
     datatype: 'json'
@@ -38,7 +35,6 @@ class Validator
     if @[method]
       @[method](questionId)
     else
-      console.log "missing validator for #{}"
       setQuestionError question.attr('id'), 'missing validator'
       false
 
@@ -81,22 +77,30 @@ class Validator
 
 class Collector
   @collectRadio: (questionId) ->
-    $("input[name='#{questionId}'][type='radio']:checked").attr('id')
+    parseInt $("input[name='#{questionId}'][type='radio']:checked").attr('id')
 
   @collectMultiple: (questionId) ->
-    $.map($("input[name='#{questionId}'][type='checkbox']:checked"), (elem) => elem.getAttribute('id'))
+    result = []
+    $("input[name='#{questionId}'][type='checkbox']").each (index, elem) =>
+      if elem.checked
+        val = 1
+      else
+        val = 0
+      result.push val
+    result
 
   @collectMultipleWithInput: (questionId) ->
-    {'checked': Collector.collectMultiple(questionId), 'text': Collector.collectTextInput(questionId)}
+    multiple = Collector.collectMultiple(questionId)
+    text = Collector.collectTextInput(questionId)
+    multiple.push text
+    multiple
 
   @collectTextInput: (questionId) ->
-    do $("input[name='#{questionId}'][type='text']").val
+    do $("input[name='#{questionId}'][type='text']").val || NaN
 
   @collectQMethod: (questionId) ->
-    result = {}
-    $("##{ questionId } .statements .statement").each (index, statement) =>
-      result[statement.getAttribute('id')] = statement.getAttribute('range_statement')
-    result
+    $.makeArray($("##{ questionId } .statements .statement").map (index, statement) =>
+      statement.getAttribute('range_statement') || NaN)
 
   @collect: (questions) -> 
     result = []
@@ -113,14 +117,6 @@ class Collector
       data['id'] = id
       result.push data
     result
-
-save = ->
-  isOk = true
-  for question, i in $(".question[required='true']")
-    unless Validator.validate(question.getAttribute("id"))
-      isOk = false
-  if isOk
-    savePollAjax(Collector.collect($(".question")))
 
 setStatement = (questionId) ->
   visible = $("##{ questionId } .statements .statement:visible:first")
@@ -159,6 +155,15 @@ init_q_method_questions = ->
         # if all statements are checked, then hide "next" button
         if $.trim(total.text()) == $.trim(current.text())
           $("##{ questionId } #select_statement").hide()
+
+save = ->
+  isOk = true
+  for question, i in $(".question[required='true']")
+    unless Validator.validate(question.getAttribute("id"))
+      isOk = false
+  if isOk
+    savePollAjax(Collector.collect($(".question")))
+
 
 init = ->
   do init_q_method_questions

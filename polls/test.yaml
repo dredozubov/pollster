@@ -23,11 +23,11 @@ questions:
       - 50+
   -
     type: text_input
-    required: true
+    required: false
     text: Любимое слово
   -
     type: multiple
-    required: true
+    required: false
     text: Your favorite colors
     answers:
       - Green
@@ -48,7 +48,7 @@ questions:
       - Икра баклажанная заморская
   -
     type: multiple_with_input
-    required: true
+    required: false
     text: Pollster is
     answers:
       - Уродливый
@@ -58,7 +58,7 @@ questions:
   -
     text: клёвое описание вопроса
     type: q_method
-    required: true
+    required: false
     statements:
       - Я люблю печеньки
       - Я не люблю кабачки
