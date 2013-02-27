@@ -10,15 +10,15 @@ module DBMongo
 
   def get_db_connection(db_settings)
     begin
-      @@db = MongoClient.new(db_settings[:host], db_settings[:port])
+      @@client = MongoClient.new(db_settings[:host], db_settings[:port])  
+      @@connection = @@client.db db_settings[:dbname]
 
       if db_settings[:user]
         unless @@db.authenticate(db_settings[:user], db_settings[:password])
           abort "Cannot authenticate to the database, preparing to shutdown..." 
         end
       end
-      
-      @@connection = @@db.db db_settings[:dbname]
+
     rescue Mongo::ConnectionFailure => exc
       abort "No connection to mongodb(#{ exc }), preparing to shutdown..."
     end
