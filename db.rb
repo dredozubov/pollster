@@ -26,7 +26,7 @@ module DBMongo
 
   def save(poll_name, data)
     begin
-      new_id = @@connection[poll_name].insert data
+      new_id = @@db[poll_name].insert data
     rescue Mongo::MongoRubyError => exc
       raise DatabaseWriteError, exc
     end
