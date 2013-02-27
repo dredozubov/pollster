@@ -25,11 +25,11 @@ class PollsterAppRack < Sinatra::Application
   configure :production do
     set :db_backend, DBMongo
     set :db_settings, {
-      :host => 'localhost',
-      :port => 27017,
-      :dbname => 'pollster',
-      :user => 'myproductionuser',
-      :password => 'mysupercoolproductionpassword'
+      :host => 'ds031957.mongolab.com',
+      :port => 31957,
+      :dbname => 'heroku_app11809717',
+      :user => 'pollster',
+      :password => 'myawesomepassword'
     }
 
   end
