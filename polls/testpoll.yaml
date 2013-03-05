@@ -1,0 +1,53 @@
+title:
+  Test poll, for testing purposes only
+description:
+   This is description, you can write whatever you want here.
+thanks_message: 
+  Thanks for testing this app out!
+questions:
+  - 
+    type: radio
+    required: true
+    text: Please choose one direction
+    answers:
+      - Left
+      - Right
+  -
+    type: radio
+    required: false
+    text: >
+      Please choose your age range. This question is optional, you can freely skip it.
+    answers:
+      - 18-25
+      - 26-35
+      - 35-50
+      - 50+
+  -
+    text: 
+    type: q_method
+    required: true
+    statements:
+      - I like cookies
+      - I like potatoes
+      - I like beef
+    range_statements:
+      - I absolutely love it!
+      - Yes.
+      - I don't know.
+      - Not so much.
+      - No! I hate it!
+  -
+    type: text_input
+    required: true
+    text: Type in your favorite word
+  -
+    type: multiple_with_input
+    required: true
+    text: Choose your favorite colors. You can add one more color to your answer.
+    answers:
+      - Green
+      - Yellow
+      - Black
+      - White
+      - Blue
+      - Red
