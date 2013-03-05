@@ -125,6 +125,7 @@ setStatement = (questionId) ->
     visible.attr('range_statement', rangeStatementId)
     visible.attr('set', 'true')
     do visible.hide
+  $("##{ questionId } input:checked").prop('checked', false)
 
 unsetStatement = (questionId, statementId) ->
   statement = $("##{ questionId } .statements .statement[id='#{ statementId }']")
