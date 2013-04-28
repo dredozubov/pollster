@@ -1,5 +1,3 @@
-require 'Psych'
-
 polls = {}
 
 not_found do
