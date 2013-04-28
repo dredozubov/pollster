@@ -1,8 +1,8 @@
 
-.statements
+.statements{ :style => "border: 1px solid; padding: 5px;" }
   - statements.each do |s|
-    %span.bold.statement{ :style => "display: none;", :id => s.index }= s.statement
-.range_statements(style="display: none;")
+    %span.italic.statement{ :style => "display: none;", :id => s.index }= s.statement
+.range_statements{ :style => "display: none; margin-top: 5px;" }
   - range_statements.each do |r|
     %label
       %input{ :type => "radio", :name => "question_#{ index }", :id => r.index }
