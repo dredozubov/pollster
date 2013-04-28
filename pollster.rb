@@ -1,3 +1,5 @@
+require 'Psych'
+
 polls = {}
 
 not_found do
@@ -16,7 +18,9 @@ end
 # input polls processing
 Dir.glob('polls/*.yaml').each do |file|
   begin
-    poll = Poll.new YAML.load_file file
+    yaml  = YAML.load_file file
+    p yaml
+    poll = Poll.new yaml unless !yaml
   rescue Psych::SyntaxError => exc
     # sinatra logging sucks
     puts "SyntaxError(#{ exc }): #{ file } YAML poll is malformed and won't be accessible!"
