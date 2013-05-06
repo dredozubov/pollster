@@ -143,7 +143,7 @@ moveStatement = (from, to, draggableOptions) ->
   
   # remove source element
   do from.remove
-  
+
   if parent.hasClass 'statements'
     # if moved from general list of statement, show next stement, update progress
     showNextStatement questionId
@@ -179,7 +179,7 @@ save = ->
 init = ->
   do init_q_method_questions
   $("#save_poll_btn").bind "click", save
-  draggableOptions = { snap: '.droppable-range-statement', snapTolerance: 10, revert: 'invalid', containment: 'parent', revert: true, cursor: 'move', helper: 'clone', appendTo: 'body' }
+  draggableOptions = { snap: '.droppable-range-statement', snapTolerance: 10, revert: 'invalid', containment: 'parent', revert: true, cursor: 'move', helper: 'clone', appendTo: 'body', cursorAt: { top: 5, left: 5 } }
   $(".draggable").draggable draggableOptions
   accordion_params = { collapsible: true, active: false, heightStyle: 'content' }
   $(".accordion").accordion accordion_params
@@ -188,7 +188,7 @@ init = ->
       moveStatement($(ui.draggable), $(this), draggableOptions)
       accordion = do $(this).parent
       accordionState = saveAccordionState accordion
-      accordion.accordion('destroy').accordion { active: accordionState}
+      accordion.accordion('destroy').accordion accordionState
   }
 
 $ ->
