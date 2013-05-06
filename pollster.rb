@@ -55,7 +55,7 @@ Dir.glob('polls/*.yaml').each do |file|
     end
 
     get "/#{ filename }/thank_you" do
-      haml :thank_you, :locals => { :message => poll.thanks_message }
+      haml :thank_you, :locals => { :message => poll.thanks_message, :title => poll.title }
     end
   end
 end
