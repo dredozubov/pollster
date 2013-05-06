@@ -8,16 +8,15 @@ error do
   haml :'500'
 end
 
-get '/application.js' do
+get '/javascripts/application.js' do
   content_type "application/javascript"
-  coffee :'../public/js/application' # TODO: this is ugly, change it
+  coffee :'../public/coffee/application' # FIXME: this is ugly, change it
 end
 
 # input polls processing
 Dir.glob('polls/*.yaml').each do |file|
   begin
     yaml  = YAML.load_file file
-    p yaml
     poll = Poll.new yaml unless !yaml
   rescue Psych::SyntaxError => exc
     # sinatra logging sucks

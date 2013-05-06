@@ -4,9 +4,11 @@
   %head
     %header
       %title= "Pollster - #{ defined?(poll) ? poll.title  : (defined?(title) ? title : "error!")}"
-      %script(src="/js/jquery-1.9.1.min.js")
-      %script(src="/application.js")
+      %script(src="/javascripts/jquery-1.9.1.min.js")
+      %script(src="/javascripts/jquery-ui-min.js")
+      %script(src="/javascripts/application.js")
       %link(rel="stylesheet" href="/css/kube.css")
+      %link(rel="stylesheet" href="/css/jquery-ui.css")
   %body
     #wrapper
       #container.container.row

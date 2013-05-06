@@ -1,19 +1,20 @@
-
-.statements{ :style => "border: 1px solid; padding: 5px;" }
-  - statements.each do |s|
-    %span.italic.statement{ :style => "display: none;", :id => s.index }= s.statement
-.range_statements{ :style => "display: none; margin-top: 5px;" }
-  - range_statements.each do |r|
-    %label
-      %input{ :type => "radio", :name => "question_#{ index }", :id => r.index }
-        = r.range_statement
-%a{ :align => "right", :id => "select_statement", :class => "btn" }next
-.progress(style="display: none;")
-  %span
-    Прогресс: 
-  %span.current
-    0
-  %span
-    of
-  %span.length
-    = statements.length
+%div
+  .statements.draggable{ :style => "border: 1px solid; padding: 5px; cursor: move;" }
+    - statements.each do |s|
+      %span.italic.statement{ :style => "display: none;", :id => s.index }= s.statement
+  .range_statements.accordion{ :role => "tablist", :style => "display: none; margin-top: 5px; margin-top: 5px;" }
+    - range_statements.each do |r|
+      %h3.droppable{ :tabindex => "r.index" }
+        %span
+        =r.range_statement
+      .ui-accordion-content.droppable
+  %a{ :align => "right", :id => "select_statement", :class => "btn" }next
+  .progress(style="display: none;")
+    %span
+      Прогресс: 
+    %span.current
+      0
+    %span
+      of
+    %span.length
+      = statements.length
