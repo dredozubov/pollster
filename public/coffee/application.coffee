@@ -118,44 +118,54 @@ class Collector
       result.push data
     result
 
-setStatement = (questionId) ->
-  visible = $("##{ questionId } .statements .statement:visible:first")
-  if visible.length
-    rangeStatementId = $("input[name='#{questionId}'][type='radio']:checked").attr('id')
-    visible.attr('range_statement', rangeStatementId)
-    visible.attr('set', 'true')
-    do visible.hide
-  $("##{ questionId } input:checked").prop('checked', false)
+moveStatement = (from, to, draggableOptions) ->
+  splitted = to.attr('id').split('-')
+  accordionId = splitted[2]
+  tabId = splitted[4]
 
-unsetStatement = (questionId, statementId) ->
-  statement = $("##{ questionId } .statements .statement[id='#{ statementId }']")
-  statement.removeAttr('set')
-  statement.removeAttr('range_statement')
-  $("##{ questionId } .progress span.current").text $("##{ questionId } .statements .statement[set='true']").length
-  $("##{ questionId } #select_statement").show()
+  toSelector = ".ui-accordion-content#ui-accordion-#{ accordionId }-panel-#{ tabId }"
+  unless to.is(toSelector)
+    to = to.siblings(toSelector)
+
+  # clone element
+  newElement = do from.clone
+
+  # make it draggable
+  newElement.addClass 'draggable'
+  newElement.draggable draggableOptions
+
+  # append it to accordion tab
+  newElement = to.append(newElement)
+
+  # make sure statement moved from general list, not from accordion
+  parent = $(from.parent().get(0))
+  questionId = from.parents('.question').attr('id')
+  
+  # remove source element
+  do from.remove
+  
+  if parent.hasClass 'statements'
+    # if moved from general list of statement, show next stement, update progress
+    showNextStatement questionId
+    updateProgressBar questionId
+
+saveAccordionState = (accordion) ->
+  accordion.accordion("option")
+
+showNextStatement = (questionId) ->
+  do $("##{ questionId } .statements .statement:first").show
+
+updateProgressBar = (questionId) ->
+  total = parseInt($("##{ questionId } .statements").attr('total'))
+  current = parseInt($("##{ questionId } .statements p.statement").length)
+  $("##{ questionId } .progress span.current").text(total - current)
+  console.log "total - current: #{current}"
 
 init_q_method_questions = ->
   $(".question[type='q_method']").each (index, question) =>
     questionId = question.getAttribute('id')
     # show initial state
-    $("##{ questionId } .statements .statement:first").show()
-    $("##{ questionId } .progress").show()
-    $("##{ questionId } .range_statements").show()
-  $(".question[type='q_method'] #select_statement").each (index, question) => 
-    questionId = question.parentNode.getAttribute('id')
-    $("##{ questionId } #select_statement").click (btn) =>
-      # make sure at least one range statement is checked
-      if $("input[name='#{ questionId }'][type='radio']:checked").length
-        total = $("##{ questionId } .progress span.length")
-        current = $("##{ questionId } .progress span.current")
-        setStatement questionId
-        # show next statement
-        do $("##{ questionId } .statements .statement:not([set]):first").show
-        # update progress counter
-        current.text $("##{ questionId } .statements .statement[set='true']").length
-        # if all statements are checked, then hide "next" button
-        if $.trim(total.text()) == $.trim(current.text())
-          $("##{ questionId } #select_statement").hide()
+    showNextStatement questionId
 
 save = ->
   isOk = true
@@ -169,9 +179,17 @@ save = ->
 init = ->
   do init_q_method_questions
   $("#save_poll_btn").bind "click", save
-  $(".draggable").draggable { snap: '.droppable-range-statement', snapTolerance: 10, revert: 'invalid', containment: 'parent', revert: true, cursor: 'move', helper: 'clone', appendTo: 'body' }
-  $(".accordion").accordion { collapsible: true, active: false }
-  do $(".droppable").droppable
+  draggableOptions = { snap: '.droppable-range-statement', snapTolerance: 10, revert: 'invalid', containment: 'parent', revert: true, cursor: 'move', helper: 'clone', appendTo: 'body' }
+  $(".draggable").draggable draggableOptions
+  accordion_params = { collapsible: true, active: false, heightStyle: 'content' }
+  $(".accordion").accordion accordion_params
+  $(".droppable").droppable {
+    drop: (event, ui) ->
+      moveStatement($(ui.draggable), $(this), draggableOptions)
+      accordion = do $(this).parent
+      accordionState = saveAccordionState accordion
+      accordion.accordion('destroy').accordion { active: accordionState}
+  }
 
 $ ->
   init()
