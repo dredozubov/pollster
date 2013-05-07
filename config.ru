@@ -43,6 +43,20 @@ class PollsterAppRack < Sinatra::Application
   register Barista::Integration::Sinatra
 end
 
+# this makes tilt to treat templates as properly encoded (respect Encoding.default_external)
+# taken from http://stackoverflow.com/questions/10828668/padrino-sass-coffee-encodingundefinedconversionerror-from-ascii-8bit-to
+module Tilt
+  class CoffeeScriptTemplate
+    def prepare
+      @data.force_encoding Encoding.default_external
+      if !options.key?(:bare) and !options.key?(:no_wrap)
+        options[:bare] = self.class.default_bare
+      end
+    end
+  end
+end
+
+
 require './pollster'
 
 run PollsterAppRack
