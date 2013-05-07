@@ -7,7 +7,7 @@ thanks_message:
 questions:
   - 
     type: radio
-    required: true
+    required: false
     text: Укажите ваш пол
     answers:
       - Мужской

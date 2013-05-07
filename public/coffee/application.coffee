@@ -26,6 +26,7 @@ setQuestionError = (question_id, errorText) ->
 removeQuestionError = (question_id) ->
   $("##{question_id} span.validation").empty()
 
+
 class Validator
   @validate: (questionId) ->
     self = this
@@ -66,14 +67,15 @@ class Validator
       false
 
   @validateQMethod: (questionId) ->
-    numberSet = $("##{ questionId } .statements .statement[set='true']").length
-    numberTotal = $("##{ questionId } .statements .statement").length
+    numberSet = parseInt($("##{ questionId } .range_statements .range_statement .statement").length)
+    numberTotal = getNumberOfStatements questionId
     if numberTotal == numberSet
       removeQuestionError questionId
       true
     else
       setQuestionError questionId, 'not complete'
       false
+
 
 class Collector
   @collectRadio: (questionId) ->
@@ -99,8 +101,14 @@ class Collector
     do $("input[name='#{questionId}'][type='text']").val || NaN
 
   @collectQMethod: (questionId) ->
-    $.makeArray($("##{ questionId } .statements .statement").map (index, statement) =>
-      statement.getAttribute('range_statement') || NaN)
+    data = {}
+    $.each $("##{ questionId } .range_statements .range_statement .statement"), (index, statement) ->
+      statementId = statement.getAttribute("id").split('_')[1]
+      rangeStatementId = $(statement).parents('.range_statement').attr('range_statement_id')
+      data[statementId] = rangeStatementId
+    # make array from data with NaN instead of missing elements
+    total = getNumberOfStatements questionId
+    (data[String number] || NaN for number in [0..total-1])
 
   @collect: (questions) -> 
     result = []
@@ -118,12 +126,13 @@ class Collector
       result.push data
     result
 
+
 moveStatement = (from, to, draggableOptions) ->
   splitted = to.attr('id').split('-')
   accordionId = splitted[2]
   tabId = splitted[4]
 
-  toSelector = ".ui-accordion-content#ui-accordion-#{ accordionId }-panel-#{ tabId }"
+  toSelector = ".range_statement#ui-accordion-#{ accordionId }-panel-#{ tabId }"
   unless to.is(toSelector)
     to = to.siblings(toSelector)
 
@@ -155,11 +164,13 @@ saveAccordionState = (accordion) ->
 showNextStatement = (questionId) ->
   do $("##{ questionId } .statements .statement:first").show
 
+getNumberOfStatements = (questionId) ->
+  parseInt($("##{ questionId } .statements").attr('total'))
+
 updateProgressBar = (questionId) ->
-  total = parseInt($("##{ questionId } .statements").attr('total'))
+  total = getNumberOfStatements questionId
   current = parseInt($("##{ questionId } .statements p.statement").length)
   $("##{ questionId } .progress span.current").text(total - current)
-  console.log "total - current: #{current}"
 
 init_q_method_questions = ->
   $(".question[type='q_method']").each (index, question) =>
