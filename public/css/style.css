@@ -20,6 +20,9 @@ p{
     margin-bottom: 3px;
 }
 
+.bold { 
+  font-weight: bold; 
+}
 
 .statement {
   border: 1px solid;
@@ -31,15 +34,17 @@ p{
 /* progress bar*/
 
 .ui-progressbar {
-    position: relative;
-    margin-bottom: 5px;
+  cursor: default;
+  position: relative;
+  margin-bottom: 5px;
 }
 
 .progressbar-caption {
-    text-align: center;
-    position: absolute;
-    left: 38%;
-    top: 4px;
-    font-weight: bold;
-    text-shadow: 1px 1px 0 #fff;
+
+  text-align: center;
+  position: absolute;
+  left: 38%;
+  top: 4px;
+  font-weight: bold;
+  text-shadow: 1px 1px 0 #fff;
   }
