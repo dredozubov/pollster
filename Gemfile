@@ -1,4 +1,5 @@
-source :rubygems
+source "https://rubygems.org"
+
 gem 'sinatra'
 gem 'sinatra-partial'
 gem 'sinatra-logger'
@@ -7,4 +8,5 @@ gem 'thin'
 gem 'barista'
 gem 'mongo'
 gem 'bson_ext'
-gem 'rack-test''
+gem 'rack-test'
+gem 'distribution'
