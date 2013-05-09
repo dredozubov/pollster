@@ -11,6 +11,7 @@ GEM
       execjs
     coffee-script-source (1.4.0)
     daemons (1.1.9)
+    distribution (0.7.0)
     eventmachine (1.0.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -43,6 +44,7 @@ PLATFORMS
 DEPENDENCIES
   barista
   bson_ext
+  distribution
   haml
   mongo
   rack-test

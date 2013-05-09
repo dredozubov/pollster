@@ -169,8 +169,10 @@ getNumberOfStatements = (questionId) ->
 
 updateProgressBar = (questionId) ->
   total = getNumberOfStatements questionId
-  current = parseInt($("##{ questionId } .statements p.statement").length)
-  $("##{ questionId } .progress span.current").text(total - current)
+  left = parseInt($("##{ questionId } .statements p.statement").length)
+  current = total - left
+  $("##{ questionId } .progressbar").progressbar("value", current)
+  $("##{ questionId } .progressbar span.current").text(current)
 
 init_q_method_questions = ->
   $(".question[type='q_method']").each (index, question) =>
@@ -190,7 +192,7 @@ save = ->
 init = ->
   do init_q_method_questions
   $("#save_poll_btn").bind "click", save
-  draggableOptions = { snap: '.droppable-range-statement', snapTolerance: 10, revert: 'invalid', containment: 'parent', revert: true, cursor: 'move', helper: 'clone', appendTo: 'body', cursorAt: { top: 5, left: 5 } }
+  draggableOptions = { snap: '.droppable-range-statement', snapTolerance: 10, containment: 'parent', revert: true, cursor: 'move', helper: 'clone', appendTo: 'body', cursorAt: { top: 5, left: 5 } }
   $(".draggable").draggable draggableOptions
   accordion_params = { collapsible: true, active: false, heightStyle: 'content' }
   $(".accordion").accordion accordion_params
@@ -201,6 +203,11 @@ init = ->
       accordionState = saveAccordionState accordion
       accordion.accordion('destroy').accordion accordionState
   }
+  $.each($(".progressbar"), (index, element) ->
+    element = $(element)
+    total = element.siblings('.statements').attr('total')
+    element.progressbar { max: total, value: 0 }
+  )
 
 $ ->
   init()

@@ -9,4 +9,4 @@ There is one database backend for now - mongodb. It just clicks with pollster.
 2. Multiple choice
 3. Text input
 4. Multiple choice + text input
-5. Q methodology-likey 
+5. Q methodology-likey

@@ -1,40 +1,45 @@
 #wrapper{
-    width:66%;
+    width:100%;
     margin:auto;
 }
-#header{
-    background-color:#ade;
-}
+
 #header>h1{
     font-size:200%;
 }
+
 h2{
     font-size:130%;
     font-family:sans-serif;
 }
-#content{
-    margin:12px 0;
-    float:left;
-}
-#side_bar{
-    margin:12px 0;
-    width :30%;
-    float:right;
-    clear:none;
-    background-color:#ddd;
-}
+
 h1{
     font-size:150%;
-}
-#footer{
-    clear:both;
-    background-color:#ade;
-    font-size:75%;
-    font-family:sans-serif;
-    color:#333;
-    border-top:solid 1px #69a;
 }
 
 p{
     margin-bottom: 3px;
 }
+
+
+.statement {
+  border: 1px solid;
+  padding: 5px;
+  cursor: move;
+  display: none;
+}
+
+/* progress bar*/
+
+.ui-progressbar {
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.progressbar-caption {
+    text-align: center;
+    position: absolute;
+    left: 38%;
+    top: 4px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #fff;
+  }

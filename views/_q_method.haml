@@ -1,4 +1,16 @@
-.statements{  :total => statements.length }
+.progressbar
+  .progressbar-caption
+    %span
+      Прогресс: 
+    %span.current
+      0
+    %span
+      of
+    %span.length
+      = statements.length
+.span{ :style => "font-weight: bold;" }
+  Утверждения:
+.statements{ :total => statements.length }
   - statements.each do |s|
     %p.italic.statement.draggable{ :style => "border: 1px solid; padding: 5px; cursor: move; display: none;", :id => "statement_#{ s.index }" }= s.statement
 .range_statements.accordion
@@ -7,12 +19,3 @@
       %span
       =r.range_statement
     .range_statement.droppable{ :range_statement_id => r.index }
-.progress
-  %span
-    Прогресс: 
-  %span.current
-    0
-  %span
-    of
-  %span.length
-    = statements.length
