@@ -26,6 +26,12 @@ setQuestionError = (question_id, errorText) ->
 removeQuestionError = (question_id) ->
   $("##{question_id} span.validation").empty()
 
+moveFocusToFirstError = ->
+  $('body').animate({
+       scrollTop: $(".error:first").offset().top
+   }, 0);
+  false
+
 
 class Validator
   @validate: (questionId) ->
@@ -185,6 +191,7 @@ save = ->
   for question, i in $(".question[required='true']")
     unless Validator.validate(question.getAttribute("id"))
       isOk = false
+      do moveFocusToFirstError
   if isOk
     savePollAjax(Collector.collect($(".question")))
 
