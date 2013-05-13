@@ -13,6 +13,7 @@
 .statements{ :total => statements.length }
   - statements.each do |s|
     %p.italic.statement.draggable{ :id => "statement_#{ s.index }" }= s.statement
+%br
 .range_statements.accordion
   - range_statements.each do |r|
     %h3.droppable

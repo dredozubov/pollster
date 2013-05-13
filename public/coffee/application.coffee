@@ -168,7 +168,12 @@ saveAccordionState = (accordion) ->
   accordion.accordion("option")
 
 showNextStatement = (questionId) ->
-  do $("##{ questionId } .statements .statement:first").show
+  newStatement = $("##{ questionId } .statements .statement:first")
+  # show it
+  do newStatement.show
+  # pulsate it
+  newStatement.pulsate { glow: true,  repeat: 2, reach: 10}
+
 
 getNumberOfStatements = (questionId) ->
   parseInt($("##{ questionId } .statements").attr('total'))
