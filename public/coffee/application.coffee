@@ -24,11 +24,11 @@ setQuestionError = (question_id, errorText) ->
   $("##{question_id} span.validation").addClass("error").text(errorText)
 
 removeQuestionError = (question_id) ->
-  $("##{question_id} span.validation").empty()
+  $("##{question_id} span.validation").removeClass("error").empty()
 
 moveFocusToFirstError = ->
-  $('body').animate({
-       scrollTop: $(".error:first").offset().top
+  $('body,html').animate({
+       scrollTop: $($(".error:first").parent().get(0)).offset().top
    }, 0);
   false
 
