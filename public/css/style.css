@@ -35,6 +35,7 @@ p{
 
 .ui-progressbar {
   cursor: default;
+  display: none;
   position: relative;
   margin-bottom: 5px;
 }

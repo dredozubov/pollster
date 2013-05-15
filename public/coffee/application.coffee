@@ -219,6 +219,7 @@ init = ->
     element = $(element)
     total = element.siblings('.statements').attr('total')
     element.progressbar { max: total, value: 0 }
+    do element.show
   )
 
 $ ->
