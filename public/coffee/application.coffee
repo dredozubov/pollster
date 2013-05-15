@@ -172,7 +172,7 @@ showNextStatement = (questionId) ->
   # show it
   do newStatement.show
   # pulsate it
-  newStatement.pulsate { glow: true,  repeat: 2, reach: 10}
+  # newStatement.pulsate { glow: true,  repeat: 2, reach: 10}
 
 
 getNumberOfStatements = (questionId) ->
